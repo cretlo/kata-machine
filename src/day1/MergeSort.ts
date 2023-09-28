@@ -1,48 +1,49 @@
 function ms(arr: number[], lo: number, hi: number) {
-    // Base case: down to 1 element
+    // Base case
     if (lo >= hi) {
         return;
     }
 
     const mid = Math.floor((lo + hi) / 2);
+
     ms(arr, lo, mid);
     ms(arr, mid + 1, hi);
+    // Post recursion
     merge(arr, lo, mid, hi);
 }
 
 function merge(arr: number[], lo: number, mid: number, hi: number) {
-    const lengthLeft = mid - lo + 1;
-    const lengthRight = hi - mid;
+    const lengthL = mid + 1 - lo;
+    const lengthR = hi - mid;
 
-    const arrLeft = arr.slice(lo, mid + 1);
-    const arrRight = arr.slice(mid + 1, hi + 1);
+    // Copies
+    const arrL = arr.slice(lo, mid + 1);
+    const arrR = arr.slice(mid + 1, hi + 1);
 
-    let i;
-    let j;
+    let i, j;
     i = j = 0;
     let k = lo;
 
-    while (i < lengthLeft && j < lengthRight) {
-        if (arrLeft[i] < arrRight[j]) {
-            arr[k] = arrLeft[i];
+    while (i < lengthL && j < lengthR) {
+        if (arrL[i] < arrR[j]) {
+            arr[k] = arrL[i];
             i++;
         } else {
-            arr[k] = arrRight[j];
+            arr[k] = arrR[j];
             j++;
         }
 
         k++;
     }
 
-    // Add remaining values from non empty L or R arr to original Arr
-    while (i < lengthLeft) {
-        arr[k] = arrLeft[i];
+    while (i < lengthL) {
+        arr[k] = arrL[i];
         i++;
         k++;
     }
 
-    while (j < lengthRight) {
-        arr[k] = arrRight[j];
+    while (j < lengthR) {
+        arr[k] = arrR[j];
         j++;
         k++;
     }

@@ -11,6 +11,4 @@ export default function insertion_sort(arr: number[]): void {
 
         arr[j + 1] = key;
     }
-
-    return;
 }
